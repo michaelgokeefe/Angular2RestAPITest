@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Configuration } from './app.constants';
+import { ModelsTest } from './models.test';
 
 @Injectable()
 export class AppService {
@@ -17,14 +18,13 @@ export class AppService {
     this.headers.append('Accept', 'application/json'); 
   }
 
-  getPosts(searchVal: string): Observable<Response> {
+  getPosts(searchVal: string): Observable<ModelsTest[]> {
     return this.http.get(this.apiUrl + searchVal).map(this.extractData).catch(this.handleError);
   }
 
   private extractData(res: Response) {
-    return res;
+    return res.json() || { };
     // previous: JSON.stringify( res.json() );
-    
   }
 
   private handleError (error: any) {
