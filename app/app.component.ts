@@ -3,13 +3,17 @@ import { HTTP_PROVIDERS, Response }  from '@angular/http';
 import { Observable }       from 'rxjs/Observable';
 import { Subject }          from 'rxjs/Subject';
 import { AppService }       from './app.service';
+import { ModelsTest }       from './models.test'
 
 @Component({
   selector: 'my-app',
   template: `
     <h1>Event Insight Test</h1>
     <ul>
-      {{item}}
+      User ID: {{item.userId}}  <br>
+      ID: {{item.id}} <br>
+      Title: {{item.title}} <br>
+      Body: {{item.body}}
     </ul>
     <ul>
     Input GET method:
@@ -24,9 +28,9 @@ import { AppService }       from './app.service';
 
 
 export class AppComponent {
-  errorMessage: string;
-  public item: Response;
-  mode = 'Observable';
+  private errorMessage: string;
+  private item: any = new ModelsTest(0, 0, "dummy", "dummy");
+  private mode = 'Observable';
 
   constructor (private appService: AppService) { }
 
@@ -35,7 +39,7 @@ export class AppComponent {
   getPosts(searchVal: string): void {
     this.appService.getPosts(searchVal) 
                     .subscribe(
-                      newItem => this.item = newItem,
+                      newItem => this.item = ModelsTest.fromJson(newItem.json()),
                       error => this.errorMessage = <any>error);
   } 
 }

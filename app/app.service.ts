@@ -10,24 +10,20 @@ export class AppService {
   private headers: Headers;
 
   constructor(private http: Http) {
-    this.apiUrl = 'http://jsonplaceholder.typicode.com';
+    this.apiUrl = Configuration.ApiUrl;
 
     this.headers = new Headers();
     this.headers.append('Content-Type', 'application/json');
     this.headers.append('Accept', 'application/json'); 
   }
 
- /* getPosts = (searchVal: string): Observable<Response> => {
-    return this.http.get(this.apiUrl + searchVal).map(res => res.json());
-  }*/
-
   getPosts(searchVal: string): Observable<Response> {
-    // TODO: Try without catch
     return this.http.get(this.apiUrl + searchVal).map(this.extractData).catch(this.handleError);
   }
 
   private extractData(res: Response) {
-    return JSON.stringify( res.json() );
+    return res;
+    // previous: JSON.stringify( res.json() );
     
   }
 
