@@ -4,6 +4,7 @@ import { Observable }       from 'rxjs/Observable';
 import { Subject }          from 'rxjs/Subject';
 import { AppService }       from './app.service';
 import { ModelsTest }       from './models.test'
+import {PrettyJsonPipe} from '../node_modules/angular2-prettyjson';
 
 @Component({
   selector: 'my-app',
@@ -11,11 +12,8 @@ import { ModelsTest }       from './models.test'
     <h1>Event Insight Test</h1>
     <ul>
       <li *ngFor="let item of items">
-        User ID: {{item.userId}}  <br>
-        ID: {{item.id}}           <br>
-        Title: {{item.title}}     <br>
-        Body: {{item.body}}       <br>
-      </li>
+        {{item | json}}
+      </li> 
     </ul>
     <ul>
     Input GET method:
@@ -31,7 +29,7 @@ import { ModelsTest }       from './models.test'
 
 export class AppComponent {
   private errorMessage: string;
-  private items: any[];
+  private items: Object[];
   private mode = 'Observable';
 
   constructor (private appService: AppService) { }
@@ -43,6 +41,7 @@ export class AppComponent {
                       newItems => {
                         if (newItems.constructor === Array) {
                           that.items = newItems;
+                          
                         } else {
                           that.items = [];
                           that.items.push(newItems);

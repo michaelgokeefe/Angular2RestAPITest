@@ -18,7 +18,7 @@ export class AppService {
     this.headers.append('Accept', 'application/json'); 
   }
 
-  getPosts(searchVal: string): Observable<ModelsTest[]> {
+  getPosts(searchVal: string): Observable<Object[]> {
     return this.http.get(this.apiUrl + searchVal).map(this.extractData).catch(this.handleError);
   }
 
